@@ -101,4 +101,46 @@ window.addEventListener("DOMContentLoaded", () => {
   setClock(".timer", deadline);
 
   //Modal
+
+  const modal = document.querySelector(".modal");
+  const openModal = document.querySelectorAll("[data-modal]");
+  const closeModal = document.querySelector("[data-close]");
+  openModal.forEach((btn) => btn.addEventListener("click", openModalWindow));
+
+  function openModalWindow() {
+    modal.style.display = "block";
+    closeModal.addEventListener("click", closeModalWindow);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModalWindow();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Escape") {
+        closeModalWindow();
+      }
+    });
+    document.body.style.overflow = "hidden";
+    clearInterval(modalTimetId);
+  }
+
+  function closeModalWindow() {
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+  }
+
+  const modalTimetId = setTimeout(openModalWindow, 10000);
+
+  function showModalByScroll() {
+    if (
+      window.pageYOffset + document.documentElement.clientHeight >=
+      document.documentElement.scrollHeight - 1
+    ) {
+      openModalWindow();
+      window.removeEventListener("scroll", showModalByScroll);
+    }
+  }
+  window.addEventListener("scroll", showModalByScroll);
 });
