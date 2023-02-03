@@ -236,7 +236,7 @@ window.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const statusMessage = document.createElement(div);
+      let statusMessage = document.createElement("div");
       statusMessage.classList.add("status");
       statusMessage.textContent = message.loading;
       form.append(statusMessage);
